@@ -1,6 +1,5 @@
 const gameBoard = (function () {
     let arrayBoard = [];
-
     function fillInArrayBoard () {
         for (let i = 0; i < 3; ++i) {
             arrayBoard.push([]);
@@ -65,10 +64,18 @@ const gameBoard = (function () {
         }
     });
 
+    const getBoardState = (function () {
+        // create & return deep copy of array board
+        return arrayBoard.map(row => [...row]);
+    })
+
     return {
         setMark,
         getState,
+        getBoardState,
     }
 })
+
+
 
 console.log(gameBoard().getState());
