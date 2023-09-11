@@ -65,17 +65,42 @@ const gameBoard = (function () {
     });
 
     const getBoardState = (function () {
-        // create & return deep copy of array board
-        return arrayBoard.map(row => [...row]);
+        // create & return deep 1D copy of array board(instead of 2D)
+        return arrayBoard.map(row => [...row]).flat();
+    })
+
+    // check if the field is full
+    const checkEndOfGame = (function () {
+        const found = arrayBoard.find((element) => element === ' ');
+        return found !== null;
     })
 
     return {
         setMark,
         getState,
         getBoardState,
+        checkEndOfGame,
     }
 })
 
+const gameBoardElement = (function (arrayBoardCopy) {
+    const gameBoardElement = document.createElement('div');
+    arrayBoardCopy.forEach((value) => {
+        const cell = document.createElement('div'); // create 1 cell of a gameBoard
+        cell.textContent = value;
+        gameBoardElement.appendChild(cell);
+    })
+})
 
+const startButtonWrapper = (function () {
+    const startButton = document.getElementsByClassName('start-button')[0];
+    const gameWindow = document.getElementsByClassName('game-window')[0];
+    const startHandler = function () {
+        // gameWindow.appendChild()
+    }
+    startButton.addEventListener('click', startHandler);
+})
 
-console.log(gameBoard().getState());
+const game = (function () {
+
+})
