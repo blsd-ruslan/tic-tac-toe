@@ -64,7 +64,7 @@ const gameBoard = (function () {
         }
     });
 
-    const getBoardState = (function () {
+    const getBoardCopy = (function () {
         // create & return deep 1D copy of array board(instead of 2D)
         return arrayBoard.map(row => [...row]).flat();
     })
@@ -78,29 +78,49 @@ const gameBoard = (function () {
     return {
         setMark,
         getState,
-        getBoardState,
+        getBoardCopy,
         checkEndOfGame,
     }
 })
 
 const gameBoardElement = (function (arrayBoardCopy) {
+    const gameWindow = document.getElementsByClassName('game-window')[0];
     const gameBoardElement = document.createElement('div');
+    gameBoardElement.classList.add('game-board');
+
     arrayBoardCopy.forEach((value) => {
         const cell = document.createElement('div'); // create 1 cell of a gameBoard
+        cell.classList.add('game-cell');
+        if (value === 'X') {
+            cell.classList.add('x-mark');
+        }
+        else {
+            cell.classList.add('o-mark');
+        }
         cell.textContent = value;
         gameBoardElement.appendChild(cell);
     })
+    gameWindow.appendChild(gameBoardElement);
 })
 
-const startButtonWrapper = (function () {
+const startButtonWrapper = function () {
     const startButton = document.getElementsByClassName('start-button')[0];
-    const gameWindow = document.getElementsByClassName('game-window')[0];
     const startHandler = function () {
-        // gameWindow.appendChild()
+        if (!document.getElementsByClassName('game-board')[0]) {
+            game();
+        }
     }
     startButton.addEventListener('click', startHandler);
-})
+};
+startButtonWrapper();
+
+function createPlayer(name, mark) {
+    return {name, mark, displayName: function () {
+            console.log("My name: " + name);
+        }};
+}
 
 const game = (function () {
-
+    const gameBoardInstance = gameBoard();
+    gameBoardElement(gameBoardInstance.getBoardCopy());
 })
