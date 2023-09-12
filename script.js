@@ -120,6 +120,22 @@ function createPlayer(name, mark) {
         }};
 }
 
+const formModule = (function () {
+    const form = document.createElement('form');
+    const firstLabel = document.createElement('label');
+    const firstInput = document.createElement('input');
+    const secondLabel = document.createElement('label');
+    const secondInput = document.createElement('input');
+    const submitButton = document.createElement('button');
+    firstLabel.htmlFor = 'first-player-input';
+    firstInput.type = 'text';
+    firstInput.id = 'first-player-input';
+    secondLabel.htmlFor = 'second-player-input';
+    // TODO: finish setting up form
+})
+
+// TODO: create listener for submit button
+
 const game = (function () {
     const gameBoardInstance = gameBoard();
     gameBoardElement(gameBoardInstance.getBoardCopy());
