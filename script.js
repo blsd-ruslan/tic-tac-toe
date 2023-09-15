@@ -101,6 +101,8 @@ const gameBoardElement = (function (arrayBoardCopy) {
         gameBoardElement.appendChild(cell);
     })
     gameWindow.appendChild(gameBoardElement);
+
+
 })
 
 const startButtonWrapper = function () {
@@ -121,22 +123,41 @@ function createPlayer(name, mark) {
 }
 
 const formModule = (function () {
+    const gameWindow = document.getElementsByClassName('game-window')[0];
+
     const form = document.createElement('form');
+    form.classList.add('player-form');
     const firstLabel = document.createElement('label');
     const firstInput = document.createElement('input');
     const secondLabel = document.createElement('label');
     const secondInput = document.createElement('input');
     const submitButton = document.createElement('button');
+
     firstLabel.htmlFor = 'first-player-input';
+    firstLabel.innerText = 'First Player';
     firstInput.type = 'text';
     firstInput.id = 'first-player-input';
-    secondLabel.htmlFor = 'second-player-input';
-    // TODO: finish setting up form
-})
 
+    secondLabel.htmlFor = 'second-player-input';
+    secondLabel.innerText = 'Second Player';
+    secondInput.type = 'text';
+    secondInput.id = 'second-player-input';
+    submitButton.innerText = 'Submit';
+
+    form.appendChild(firstLabel);
+    form.appendChild(firstInput);
+    form.appendChild(secondLabel);
+    form.appendChild(secondInput);
+    form.appendChild(submitButton);
+
+    gameWindow.appendChild(form);
+})
+// TODO: get form out of game window
 // TODO: create listener for submit button
+// TODO: make start of game being called after submitting the form
 
 const game = (function () {
     const gameBoardInstance = gameBoard();
+    formModule();
     gameBoardElement(gameBoardInstance.getBoardCopy());
 })

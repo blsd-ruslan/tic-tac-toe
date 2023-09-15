@@ -58,6 +58,12 @@ img {
     gap: 1rem;
 }
 
+.player-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .game-window {
     display: flex;
     justify-content: center;
