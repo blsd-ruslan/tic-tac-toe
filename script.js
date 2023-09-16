@@ -101,8 +101,6 @@ const gameBoardElement = (function (arrayBoardCopy) {
         gameBoardElement.appendChild(cell);
     })
     gameWindow.appendChild(gameBoardElement);
-
-
 })
 
 const startButtonWrapper = function () {
@@ -122,6 +120,39 @@ function createPlayer(name, mark) {
         }};
 }
 
+function playerElement(player) {
+    const playerContainer = document.createElement('div');
+    const playerName = document.createElement('span');
+    const playerMark = document.createElement('span');
+
+    playerContainer.classList.add('single-player');
+    playerName.classList.add('name');
+    playerMark.classList.add('mark');
+    playerName.innerText = player.name;
+    playerMark.innerText = player.mark;
+
+    playerContainer.appendChild(playerName);
+    playerContainer.appendChild(playerMark);
+
+    return playerContainer;
+}
+
+
+// TODO: add styling to that part
+// creates container with info about players & appends it to game window
+function appendPlayersInfo(player1, player2) {
+    const gameWindow = document.getElementsByClassName('game-window')[0];
+    const playersContainer = document.createElement('div');
+    playersContainer.classList.add('players-container');
+    const player1Container = playerElement(player1);
+    const player2Container = playerElement(player2);
+
+    playersContainer.appendChild(player1Container);
+    playersContainer.appendChild(player2Container);
+    gameWindow.appendChild(playersContainer);
+}
+
+// creates form & SUBMIT-listener which fills in player's info, displays game board, removes start-button
 const formModule = (function (gameBoardInstance, player1, player2) {
     const mainPartContainer = document.getElementsByClassName('main-part-container')[0];
 
@@ -159,16 +190,17 @@ const formModule = (function (gameBoardInstance, player1, player2) {
         player1.displayInfo();
         player2.displayInfo();
         mainPartContainer.removeChild(form);
+        appendPlayersInfo(player1, player2);
         gameBoardElement(gameBoardInstance.getBoardCopy());
+        // remove start button
+        const toolBar = document.getElementsByClassName('toolbar')[0];
+        const startButton = document.getElementsByClassName('start-button')[0];
+        toolBar.removeChild(startButton);
     });
 })
-// TODO: get form out of game window
-// TODO: create listener for submit button
-// TODO: make start of game being called after submitting the form
 
 const game = (function () {
     let player1, player2;
     const gameBoardInstance = gameBoard();
     formModule(gameBoardInstance, player1, player2);
-    // gameBoardElement(gameBoardInstance.getBoardCopy());
 })
