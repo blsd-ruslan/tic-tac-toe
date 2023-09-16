@@ -19,6 +19,29 @@ const gameBoard = (function () {
         }
     });
 
+
+    const gameBoardElement = (function () {
+        const gameBoardElement = document.createElement('div');
+        gameBoardElement.classList.add('game-board');
+
+        for (let i = 0; i < 3; ++i) {
+            for (let j = 0; j < 3; ++j) {
+                const cellElement = document.createElement('div');
+                cellElement.innerText = ' ';
+                cellElement.classList.add('game-cell');
+                cellElement.id = "cell-" + (i + j + 1).toString(); // each cell gets id from 1 to 9
+                gameBoardElement.appendChild(cellElement);
+            }
+        }
+        return {gameBoardElement}
+    })();
+
+    const addGameBoardElement = ( function () {
+        const gameWindow = document.getElementsByClassName('game-window')[0];
+        gameWindow.appendChild(gameBoardElement.gameBoardElement);
+    })
+
+    // checks state of game(equal - "-", X win - "X", O win - "O")
     const getState = (function () {
         const threeInRow = (function (mark) {
             let vertical = [[], [], []];
@@ -80,27 +103,8 @@ const gameBoard = (function () {
         getState,
         getBoardCopy,
         checkEndOfGame,
+        addGameBoardElement
     }
-})
-
-const gameBoardElement = (function (arrayBoardCopy) {
-    const gameWindow = document.getElementsByClassName('game-window')[0];
-    const gameBoardElement = document.createElement('div');
-    gameBoardElement.classList.add('game-board');
-
-    arrayBoardCopy.forEach((value) => {
-        const cell = document.createElement('div'); // create 1 cell of a gameBoard
-        cell.classList.add('game-cell');
-        if (value === 'X') {
-            cell.classList.add('x-mark');
-        }
-        else {
-            cell.classList.add('o-mark');
-        }
-        cell.textContent = value;
-        gameBoardElement.appendChild(cell);
-    })
-    gameWindow.appendChild(gameBoardElement);
 })
 
 const startButtonWrapper = function () {
@@ -159,6 +163,7 @@ function appendPlayersInfo(player1, player2) {
 const formModule = (function (gameBoardInstance, player1, player2) {
     const mainPartContainer = document.getElementsByClassName('main-part-container')[0];
 
+    // set up a form & add to page
     const form = document.createElement('form');
     form.id = 'player-form';
     const firstLabel = document.createElement('label');
@@ -186,7 +191,7 @@ const formModule = (function (gameBoardInstance, player1, player2) {
 
     mainPartContainer.appendChild(form);
 
-    form.addEventListener('submit', function (event, player1, player2) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
         player1 = createPlayer(firstInput.value, 'X');
         player2 = createPlayer(secondInput.value, 'O');
@@ -194,7 +199,7 @@ const formModule = (function (gameBoardInstance, player1, player2) {
         player2.displayInfo();
         mainPartContainer.removeChild(form);
         appendPlayersInfo(player1, player2);
-        gameBoardElement(gameBoardInstance.getBoardCopy());
+        gameBoardInstance.addGameBoardElement();
         // remove start button
         const toolBar = document.getElementsByClassName('toolbar')[0];
         const startButton = document.getElementsByClassName('start-button')[0];
@@ -203,7 +208,7 @@ const formModule = (function (gameBoardInstance, player1, player2) {
 })
 
 const game = (function () {
-    let player1, player2;
+    let [player1, player2] = [null, null];
     const gameBoardInstance = gameBoard();
     formModule(gameBoardInstance, player1, player2);
 })
