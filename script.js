@@ -19,6 +19,10 @@ const gameBoard = (function () {
         }
     });
 
+    // TODO: finish it
+    // const cellClickListener = function () {
+    //
+    // }
 
     const gameBoardElement = (function () {
         const gameBoardElement = document.createElement('div');

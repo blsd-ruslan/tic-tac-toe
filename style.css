@@ -75,14 +75,16 @@ img {
 
 .game-board {
     display: grid;
+    background-color: #B0C4B1;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
     justify-items: center;
     transition: transform 1000ms;
 }
 
 .game-cell {
-    border: #B0C4B1 solid 2px;
+    background-color: #DEDBD2;
     font-family: 'Rock Salt', cursive;
     height: 8rem;
     width: 8rem;
@@ -90,6 +92,14 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.game-cell:hover {
+    background-color: #c9c6bd;
+}
+
+.game-cell:active {
+    background-color: #aba89f;
 }
 
 .x-mark {
