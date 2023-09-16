@@ -127,7 +127,12 @@ function playerElement(player) {
 
     playerContainer.classList.add('single-player');
     playerName.classList.add('name');
-    playerMark.classList.add('mark');
+    if (player.mark === 'X') {
+        playerMark.classList.add('x-mark');
+    }
+    else {
+        playerMark.classList.add('o-mark');
+    }
     playerName.innerText = player.name;
     playerMark.innerText = player.mark;
 
@@ -137,8 +142,6 @@ function playerElement(player) {
     return playerContainer;
 }
 
-
-// TODO: add styling to that part
 // creates container with info about players & appends it to game window
 function appendPlayersInfo(player1, player2) {
     const gameWindow = document.getElementsByClassName('game-window')[0];

@@ -70,10 +70,10 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 6rem;
 }
 
 .game-board {
-    margin: 2rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -98,4 +98,16 @@ img {
 
 .o-mark {
     color: #4A5759;
+}
+
+.players-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    font-weight: 700;
+}
+
+.single-player {
+    display: flex;
+    gap: 1rem;
 }
