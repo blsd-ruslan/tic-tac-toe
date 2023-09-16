@@ -1,15 +1,25 @@
 const gameBoard = (function () {
     let arrayBoard = [];
-    function fillInArrayBoard () {
-        for (let i = 0; i < 3; ++i) {
-            arrayBoard.push([]);
-            for (let j = 0; j < 3; ++j) {
-                arrayBoard[i].push(' ');
-            }
+    let currentMark = 'X'; // represent mark for the current step
+
+    // Initialize the arrayBoard
+    for (let i = 0; i < 3; ++i) {
+        arrayBoard.push([]);
+        for (let j = 0; j < 3; ++j) {
+            arrayBoard[i].push(' ');
         }
     }
-    fillInArrayBoard();
 
+    // changes 'currentMark' variable to opposite, must be called after each turn
+    const changeCurrentMark = function () {
+        if (currentMark === 'X') {
+            currentMark = 'O';
+        } else {
+            currentMark = 'X';
+        }
+    }
+
+    // set mark inside data-array, not displayed element
     const setMark = (function (mark, coordinateX, coordinateY) {
         if (mark === 'X' || mark === 'O') {
             arrayBoard[coordinateX][coordinateY] = mark;
@@ -19,10 +29,18 @@ const gameBoard = (function () {
         }
     });
 
-    // TODO: finish it
-    // const cellClickListener = function () {
-    //
-    // }
+    const cellClickListener = function (cellElement) {
+        console.log(cellElement.id);
+        setMark(currentMark, Math.floor(cellElement.id / 3), cellElement.id % 3);
+        cellElement.innerText = currentMark;
+        if (currentMark === 'X') {
+            cellElement.classList.add('x-mark');
+        }
+        else {
+            cellElement.classList.add('o-mark');
+        }
+        changeCurrentMark();
+    }
 
     const gameBoardElement = (function () {
         const gameBoardElement = document.createElement('div');
@@ -33,7 +51,9 @@ const gameBoard = (function () {
                 const cellElement = document.createElement('div');
                 cellElement.innerText = ' ';
                 cellElement.classList.add('game-cell');
-                cellElement.id = "cell-" + (i + j + 1).toString(); // each cell gets id from 1 to 9
+                cellElement.id = (i*3 + j).toString(); // each cell gets id from 1 to 9
+                cellElement.addEventListener('click', function () {cellClickListener(cellElement)});
+                // console.log(currentMark, Math.floor(cellElement.id / 3), cellElement.id % 3);
                 gameBoardElement.appendChild(cellElement);
             }
         }
