@@ -58,9 +58,10 @@ img {
     gap: 1rem;
 }
 
-.player-form {
+#player-form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
