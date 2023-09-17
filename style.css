@@ -72,6 +72,7 @@ button:active,.game-cell:active {
 
 .main-part-container {
     display: flex;
+    gap: 5vh;
     flex-direction: column;
     justify-content: flex-start;
     padding-top: 10vh;
@@ -153,4 +154,14 @@ button:active,.game-cell:active {
 .single-player {
     display: flex;
     gap: 1rem;
+}
+
+.end-of-game-container {
+    display: flex;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.not-clickable {
+    pointer-events: none;
 }

@@ -1,3 +1,5 @@
+// TODO: add restart button
+
 const gameBoard = (function () {
     let arrayBoard = [];
     let currentMark = 'X'; // represent mark for the current step
@@ -96,8 +98,10 @@ const gameBoard = (function () {
         // end of game check
         if (flagWin === true || endOfGame() === true) {
             const mainPart = document.getElementsByClassName('main-part-container')[0];
-            mainPart.removeChild(document.getElementsByClassName('game-window')[0]);
-            mainPart.appendChild(endOfGameElement(state));
+            const gameWindow = document.getElementsByClassName('game-window')[0];
+            // mainPart.removeChild();
+            mainPart.insertBefore(endOfGameElement(state), gameWindow);
+            gameWindow.classList.add('not-clickable');
         }
         changeCurrentMark();
     }
@@ -141,13 +145,13 @@ const gameBoard = (function () {
                         return mark;
                     }
 
-                    vertical[j][i] = mark;
+                    vertical[j][i] = arrayBoard[i][j];
                 }
             }
             const firstDiagonal = [arrayBoard[0][0], arrayBoard[1][1], arrayBoard[2][2]];
             const secondDiagonal = [arrayBoard[2][0], arrayBoard[1][1], arrayBoard[0][2]];
 
-            const winDirections = [vertical, firstDiagonal, secondDiagonal];
+            const winDirections = [vertical[0], vertical[1], vertical[2], firstDiagonal, secondDiagonal];
 
             for (const winDirection of winDirections) { // check if 'X' won
                 if (winDirection.every((cell) => cell === mark)) {
