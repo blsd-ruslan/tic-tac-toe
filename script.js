@@ -1,6 +1,7 @@
 const gameBoard = (function () {
     let arrayBoard = [];
     let currentMark = 'X'; // represent mark for the current step
+    let marksPlaced = 0; // represent counter for amount of mark on field
 
     // Initialize the arrayBoard
     for (let i = 0; i < 3; ++i) {
@@ -27,6 +28,7 @@ const gameBoard = (function () {
         else {
             console.log(mark + " is wrong option for writing into gameBoard.");
         }
+        ++marksPlaced;
     });
 
     const cellClickListener = function (cellElement) {
@@ -129,25 +131,28 @@ const gameBoard = (function () {
         checkEndOfGame,
         addGameBoardElement
     }
-})
+})();
 
-const startButtonWrapper = function () {
+// wrap start button, which execute game
+(function () {
     const startButton = document.getElementsByClassName('start-button')[0];
     const startHandler = function () {
         if (!document.getElementsByClassName('game-board')[0]) {
             game();
+            startButton.parentNode.removeChild(startButton);
         }
     }
     startButton.addEventListener('click', startHandler);
-};
-startButtonWrapper();
+})();
 
+// create player object
 function createPlayer(name, mark) {
     return {name, mark, displayInfo: function () {
             console.log("My name: " + name + "; My mark: " + mark);
         }};
 }
 
+// create element for 1 user for scoreboard
 function playerElement(player) {
     const playerContainer = document.createElement('div');
     const playerName = document.createElement('span');
@@ -170,7 +175,7 @@ function playerElement(player) {
     return playerContainer;
 }
 
-// creates container with info about players & appends it to game window
+// create container with info about players & appends it to game window
 function appendPlayersInfo(player1, player2) {
     const gameWindow = document.getElementsByClassName('game-window')[0];
     const playersContainer = document.createElement('div');
@@ -183,7 +188,7 @@ function appendPlayersInfo(player1, player2) {
     gameWindow.appendChild(playersContainer);
 }
 
-// creates form & SUBMIT-listener which fills in player's info, displays game board, removes start-button
+// create form & SUBMIT-listener which fills in player's info, displays game board, removes start-button
 const formModule = (function (gameBoardInstance, player1, player2) {
     const mainPartContainer = document.getElementsByClassName('main-part-container')[0];
 
@@ -233,6 +238,5 @@ const formModule = (function (gameBoardInstance, player1, player2) {
 
 const game = (function () {
     let [player1, player2] = [null, null];
-    const gameBoardInstance = gameBoard();
-    formModule(gameBoardInstance, player1, player2);
+    formModule(gameBoard, player1, player2);
 })

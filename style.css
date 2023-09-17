@@ -17,6 +17,43 @@ img {
     height: 2rem;
 }
 
+input {
+    background-color: #DEDBD2;
+    color: #2F3839;
+    border: #B0C4B1 solid 2px;
+    border-radius: 5rem;
+    min-height: 2rem;
+    padding: 0 1rem;
+    font-size: 2rem;
+}
+
+#player-form > input:-webkit-autofill,
+#player-form > input:-webkit-autofill:hover,
+#player-form > input:-webkit-autofill:focus,
+#player-form > input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #c9c6bd inset !important;
+    -webkit-text-fill-color: #2F3839 !important;
+}
+
+button {
+    background-color: #DEDBD2;
+    color: #2F3839;
+    border: #B0C4B1 solid 2px;
+    border-radius: 5rem;
+    padding: 1rem;
+    min-width: 7rem;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+button:hover,.game-cell:hover {
+    background-color: #c9c6bd;
+}
+
+button:active,.game-cell:active {
+    background-color: #aba89f;
+}
+
 .page-wrapper {
     height: 100%;
     display: grid;
@@ -34,6 +71,9 @@ img {
 }
 
 .main-part-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 .toolbar {
@@ -92,14 +132,6 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.game-cell:hover {
-    background-color: #c9c6bd;
-}
-
-.game-cell:active {
-    background-color: #aba89f;
 }
 
 .x-mark {
