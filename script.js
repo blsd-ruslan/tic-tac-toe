@@ -1,4 +1,5 @@
 // TODO: add restart button
+// TODO: strike out win-combination
 
 const gameBoard = (function () {
     let arrayBoard = [];
@@ -41,8 +42,7 @@ const gameBoard = (function () {
 
     // check if the field is full
     const endOfGame = (function () {
-        const found = arrayBoard.find((element) => element === ' ');
-        return found === null;
+        return arrayBoard.flat().includes(' ') === false;
     })
 
     // set mark inside data-array, not displayed element
