@@ -96,6 +96,7 @@ const gameBoard = (function () {
         // end of game check
         if (flagWin === true || endOfGame() === true) {
             const mainPart = document.getElementsByClassName('main-part-container')[0];
+            mainPart.removeChild(document.getElementsByClassName('game-window')[0]);
             mainPart.appendChild(endOfGameElement(state));
         }
         changeCurrentMark();
