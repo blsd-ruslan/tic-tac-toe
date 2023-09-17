@@ -2,6 +2,7 @@ const gameBoard = (function () {
     let arrayBoard = [];
     let currentMark = 'X'; // represent mark for the current step
     let marksPlaced = 0; // represent counter for amount of mark on field
+    let [player1, player2] = [null, null]; // represent 2 player objects
 
     // Initialize the arrayBoard
     for (let i = 0; i < 3; ++i) {
@@ -20,6 +21,28 @@ const gameBoard = (function () {
         }
     }
 
+    // add info to players variables in gameBoard obj
+    const addPlayersInfo = (function (p1, p2) {
+        player1 = p1;
+        player2 = p2;
+        player1.displayInfo();
+        player2.displayInfo();
+    })
+
+    const retrievePlayer1 = (function () {
+        return player1;
+    })
+
+    const retrievePlayer2 = (function () {
+        return player2;
+    })
+
+    // check if the field is full
+    const endOfGame = (function () {
+        const found = arrayBoard.find((element) => element === ' ');
+        return found === null;
+    })
+
     // set mark inside data-array, not displayed element
     const setMark = (function (mark, coordinateX, coordinateY) {
         if (mark === 'X' || mark === 'O') {
@@ -31,15 +54,49 @@ const gameBoard = (function () {
         ++marksPlaced;
     });
 
+    const endOfGameElement = (function (state) {
+        const endOfGameContainer = document.createElement('div');
+        endOfGameContainer.classList.add('end-of-game-container');
+        let textToDisplay;
+
+        if (state === 'X') {
+            textToDisplay = player1.name + " has won";
+        }
+        else if (state === 'O') {
+            textToDisplay = player2.name + " has won";
+        }
+        else {
+            textToDisplay = "Tie";
+        }
+
+        endOfGameContainer.innerText = textToDisplay;
+        return endOfGameContainer;
+    })
+
     const cellClickListener = function (cellElement) {
         console.log(cellElement.id);
         setMark(currentMark, Math.floor(cellElement.id / 3), cellElement.id % 3);
         cellElement.innerText = currentMark;
+        const state = getState();
+        let flagWin = false; // display state of win
         if (currentMark === 'X') {
             cellElement.classList.add('x-mark');
         }
         else {
             cellElement.classList.add('o-mark');
+        }
+
+        if (state === 'X') {
+            flagWin = true;
+        }
+        else if (state === 'O') {
+            flagWin = true;
+        }
+
+        // end of game check
+        if (flagWin === true || endOfGame() === true) {
+            const mainPart = document.getElementsByClassName('main-part-container')[0];
+            mainPart.appendChild(endOfGameElement(state));
         }
         changeCurrentMark();
     }
@@ -118,17 +175,13 @@ const gameBoard = (function () {
         return arrayBoard.map(row => [...row]).flat();
     })
 
-    // check if the field is full
-    const checkEndOfGame = (function () {
-        const found = arrayBoard.find((element) => element === ' ');
-        return found !== null;
-    })
-
     return {
+        addPlayersInfo,
+        retrievePlayer1,
+        retrievePlayer2,
         setMark,
         getState,
         getBoardCopy,
-        checkEndOfGame,
         addGameBoardElement
     }
 })();
@@ -192,7 +245,7 @@ function appendPlayersInfo(player1, player2) {
 }
 
 // create form & SUBMIT-listener which fills in player's info, displays game board, removes start-button
-const formModule = (function (gameBoardInstance, player1, player2) {
+const formModule = (function (gameBoardInstance) {
     const mainPartContainer = document.getElementsByClassName('main-part-container')[0];
 
     // set up a form & add to page
@@ -225,17 +278,13 @@ const formModule = (function (gameBoardInstance, player1, player2) {
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        player1 = createPlayer(firstInput.value, 'X');
-        player2 = createPlayer(secondInput.value, 'O');
-        player1.displayInfo();
-        player2.displayInfo();
+        gameBoard.addPlayersInfo(createPlayer(firstInput.value, 'X'), createPlayer(secondInput.value, 'O'));
         mainPartContainer.removeChild(form);
-        appendPlayersInfo(player1, player2);
+        appendPlayersInfo(gameBoard.retrievePlayer1(), gameBoard.retrievePlayer2());
         gameBoardInstance.addGameBoardElement();
     });
 })
 
 const game = (function () {
-    let [player1, player2] = [null, null];
-    formModule(gameBoard, player1, player2);
+    formModule(gameBoard);
 })
