@@ -139,7 +139,10 @@ const gameBoard = (function () {
     const startHandler = function () {
         if (!document.getElementsByClassName('game-board')[0]) {
             game();
-            startButton.parentNode.removeChild(startButton);
+            // remove start-button & toolbar
+            const toolBar = startButton.parentNode;
+            toolBar.removeChild(startButton);
+            toolBar.parentNode.removeChild(toolBar);
         }
     }
     startButton.addEventListener('click', startHandler);
@@ -229,10 +232,6 @@ const formModule = (function (gameBoardInstance, player1, player2) {
         mainPartContainer.removeChild(form);
         appendPlayersInfo(player1, player2);
         gameBoardInstance.addGameBoardElement();
-        // remove start button
-        const toolBar = document.getElementsByClassName('toolbar')[0];
-        const startButton = document.getElementsByClassName('start-button')[0];
-        toolBar.removeChild(startButton);
     });
 })
 

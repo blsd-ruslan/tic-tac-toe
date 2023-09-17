@@ -73,7 +73,8 @@ button:active,.game-cell:active {
 .main-part-container {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    justify-content: flex-start;
+    padding-top: 10vh;
 }
 
 .toolbar {
