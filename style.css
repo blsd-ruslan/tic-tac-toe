@@ -75,7 +75,7 @@ button:active,.game-cell:active {
     gap: 5vh;
     flex-direction: column;
     justify-content: flex-start;
-    padding-top: 10vh;
+    padding-top: 5vh;
 }
 
 .toolbar {

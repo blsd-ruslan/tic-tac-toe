@@ -76,6 +76,9 @@ const gameBoard = (function () {
     })
 
     const cellClickListener = function (cellElement) {
+        if (cellElement.innerText.trim() !== '') {
+            return;
+        }
         console.log(cellElement.id);
         setMark(currentMark, Math.floor(cellElement.id / 3), cellElement.id % 3);
         cellElement.innerText = currentMark;
