@@ -1,4 +1,5 @@
 // TODO: add restart button
+// TODO: add blur with win message
 // TODO: strike out win-combination
 
 const gameBoard = (function () {
@@ -59,19 +60,25 @@ const gameBoard = (function () {
     const endOfGameElement = (function (state) {
         const endOfGameContainer = document.createElement('div');
         endOfGameContainer.classList.add('end-of-game-container');
-        let textToDisplay;
 
+        const restartButton = document.createElement('button');
+        restartButton.classList.add('restart-button');
+        restartButton.innerText = 'RESTART';
+        restartButton.addEventListener('click', function () {location.reload();});
+
+        const endMessage = document.createElement('p');
         if (state === 'X') {
-            textToDisplay = player1.name + " has won";
+            endMessage.innerText = player1.name + " has won";
         }
         else if (state === 'O') {
-            textToDisplay = player2.name + " has won";
+            endMessage.innerText = player2.name + " has won";
         }
         else {
-            textToDisplay = "Tie";
+            endMessage.innerText = "Tie";
         }
 
-        endOfGameContainer.innerText = textToDisplay;
+        endOfGameContainer.appendChild(endMessage);
+        endOfGameContainer.appendChild(restartButton);
         return endOfGameContainer;
     })
 
@@ -105,6 +112,7 @@ const gameBoard = (function () {
             // mainPart.removeChild();
             mainPart.insertBefore(endOfGameElement(state), gameWindow);
             gameWindow.classList.add('not-clickable');
+            gameWindow.removeChild(document.getElementsByClassName('players-container')[0]);
         }
         changeCurrentMark();
     }
@@ -274,7 +282,7 @@ const formModule = (function (gameBoardInstance) {
     secondLabel.innerText = 'Second Player';
     secondInput.type = 'text';
     secondInput.id = 'second-player-input';
-    submitButton.innerText = 'Submit';
+    submitButton.innerText = 'SUBMIT';
 
     form.appendChild(firstLabel);
     form.appendChild(firstInput);
