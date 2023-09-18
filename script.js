@@ -1,4 +1,3 @@
-// TODO: add restart button
 // TODO: add blur with win message
 // TODO: strike out win-combination
 
@@ -107,11 +106,13 @@ const gameBoard = (function () {
 
         // end of game check
         if (flagWin === true || endOfGame() === true) {
-            const mainPart = document.getElementsByClassName('main-part-container')[0];
+            const body = document.getElementsByTagName('BODY')[0];
+            const mainPartContainer = document.getElementsByClassName('main-part-container')[0];
             const gameWindow = document.getElementsByClassName('game-window')[0];
             // mainPart.removeChild();
-            mainPart.insertBefore(endOfGameElement(state), gameWindow);
             gameWindow.classList.add('not-clickable');
+            mainPartContainer.classList.add('blurred');
+            body.appendChild(endOfGameElement(state));
             gameWindow.removeChild(document.getElementsByClassName('players-container')[0]);
         }
         changeCurrentMark();
